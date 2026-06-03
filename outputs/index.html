@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Syntx Field</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="auth-lock">
+    <section class="auth-screen" id="authScreen" aria-label="Авторизация">
+      <form class="auth-card" id="authForm">
+        <div class="auth-title">Вход</div>
+
+        <label class="auth-field">
+          <span>Логин</span>
+          <input id="authLogin" type="email" autocomplete="username" spellcheck="false" />
+        </label>
+
+        <label class="auth-field">
+          <span>Пароль</span>
+          <div class="password-control">
+            <input id="authPassword" type="password" autocomplete="current-password" />
+            <button class="password-toggle" id="passwordToggle" type="button" aria-label="Показать пароль">
+              <svg class="eye-open" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+                <path class="eye-slash" d="M4 4l16 16"></path>
+              </svg>
+            </button>
+          </div>
+        </label>
+
+        <div class="auth-error" id="authError" aria-live="polite"></div>
+
+        <button class="auth-submit" type="submit">Войти</button>
+      </form>
+    </section>
+
+    <div class="chats-popover" id="chatsPopover">
+      <button class="chats-trigger" id="chatsTrigger" type="button" aria-expanded="false" aria-controls="chatsPanel">
+        <span>Чаты</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m7 10 5 5 5-5" />
+        </svg>
+      </button>
+
+      <div class="chats-panel" id="chatsPanel" aria-label="Список чатов">
+        <div class="chats-panel-head">
+          <span>Недавние</span>
+          <button class="new-chat-button" id="newChatButton" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 20h9"></path>
+              <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+            </svg>
+            <span>Новый чат</span>
+          </button>
+        </div>
+
+        <div class="chats-list" id="chatsList"></div>
+      </div>
+    </div>
+
+    <div class="delete-dialog" id="deleteDialog" aria-hidden="true">
+      <div class="delete-dialog-card" role="dialog" aria-modal="true" aria-labelledby="deleteDialogTitle">
+        <div class="delete-dialog-title" id="deleteDialogTitle">Точно хотите удалить?</div>
+        <div class="delete-dialog-actions">
+          <button class="delete-cancel" id="deleteCancel" type="button">Нет</button>
+          <button class="delete-confirm" id="deleteConfirm" type="button">Да</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="logout-dialog" id="logoutDialog" aria-hidden="true">
+      <div class="logout-dialog-card" role="dialog" aria-modal="true" aria-labelledby="logoutDialogTitle">
+        <div class="logout-dialog-title" id="logoutDialogTitle">Вы уверены что хотите выйти?</div>
+        <div class="logout-dialog-actions">
+          <button class="logout-cancel" id="logoutCancel" type="button">Нет</button>
+          <button class="logout-confirm" id="logoutConfirm" type="button">Да</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="account-popover" id="accountPopover">
+      <button class="account-trigger" id="accountTrigger" type="button" aria-expanded="false" aria-controls="accountPanel">
+        <img class="account-avatar" src="assets/account-avatar.png" alt="" />
+        <span id="accountName">User1</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m7 10 5 5 5-5" />
+        </svg>
+      </button>
+
+      <div class="account-panel" id="accountPanel" aria-label="Меню аккаунта">
+        <button class="account-row" type="button">Профиль</button>
+        <button class="account-row" id="settingsButton" type="button">Настройки</button>
+        <button class="account-row" type="button">PromtHub</button>
+        <button class="account-row account-exit" type="button">Выход</button>
+      </div>
+    </div>
+
+    <section class="settings-page" id="settingsPage" aria-hidden="true">
+      <div class="settings-shell">
+        <header class="settings-header">
+          <div>
+            <span class="settings-kicker" id="settingsAccountName">Аккаунт User1</span>
+            <h1>Настройки</h1>
+          </div>
+          <button class="settings-close" id="settingsClose" type="button" aria-label="Закрыть настройки">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M18 6 6 18M6 6l12 12"></path>
+            </svg>
+          </button>
+        </header>
+
+        <div class="settings-grid">
+          <section class="settings-card">
+            <div class="settings-card-head">
+              <h2>Тема</h2>
+              <p>Выберите оформление интерфейса.</p>
+            </div>
+            <div class="theme-switcher" id="themeSwitcher" role="radiogroup" aria-label="Тема интерфейса">
+              <button class="theme-choice" type="button" data-theme-choice="light" role="radio" aria-checked="false">Светлая</button>
+              <button class="theme-choice" type="button" data-theme-choice="dark" role="radio" aria-checked="false">Темная</button>
+              <button class="theme-choice" type="button" data-theme-choice="system" role="radio" aria-checked="true">Системная</button>
+            </div>
+          </section>
+
+          <section class="settings-card">
+            <div class="settings-card-head">
+              <h2>Смена пароля</h2>
+              <p>Введите старый пароль и дважды новый.</p>
+            </div>
+            <form class="password-form" id="passwordChangeForm">
+              <label class="settings-field">
+                <span>Старый пароль</span>
+                <input id="oldPassword" type="password" autocomplete="current-password" />
+              </label>
+              <label class="settings-field">
+                <span>Новый пароль</span>
+                <input id="newPassword" type="password" autocomplete="new-password" />
+              </label>
+              <label class="settings-field">
+                <span>Повторите новый пароль</span>
+                <input id="repeatPassword" type="password" autocomplete="new-password" />
+              </label>
+              <div class="settings-message" id="passwordMessage" aria-live="polite"></div>
+              <button class="settings-submit" type="submit">Сменить пароль</button>
+            </form>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <header class="top-bar" aria-label="Разделы">
+      <nav class="top-nav">
+        <button class="top-tab is-active" type="button" data-page="gpt">GPT</button>
+        <button class="top-tab" type="button" data-page="images">Картинки</button>
+        <button class="top-tab" type="button" data-page="video">Видео</button>
+        <button class="top-tab" type="button" data-page="music">Музыка</button>
+      </nav>
+    </header>
+
+    <main class="shell">
+      <section class="workspace" aria-label="Рабочая область AI-поиска">
+        <div class="chat-feed" id="chatFeed" aria-live="polite">
+          <div class="chat-end" id="chatEnd"></div>
+        </div>
+
+        <form class="composer" id="composer">
+          <label class="visually-hidden" for="query">Поисковый запрос</label>
+          <div class="file-list" id="fileList" aria-live="polite"></div>
+
+          <div class="video-settings-chip" id="videoSettingsChip" aria-hidden="true">
+            <span id="videoSettingsChipText">Seedance 2.0 · 8 сек · 1080p · 16:9</span>
+          </div>
+
+          <div class="music-settings-chip" id="musicSettingsChip" aria-hidden="true">
+            <span id="musicSettingsChipText">Suno 5.5 · Простой</span>
+          </div>
+
+          <div class="video-settings-panel" id="videoSettingsPanel" aria-hidden="true">
+            <div class="video-settings-head">
+              <span>Настройки видео</span>
+              <span id="videoSettingsSummary">Seedance 2.0 · 8 сек · 1080p · 16:9</span>
+            </div>
+
+            <div class="video-settings-section">
+              <span class="video-settings-label">Модель</span>
+              <div class="video-model-grid" id="videoModelGrid"></div>
+            </div>
+
+            <div class="video-settings-section">
+              <div class="video-settings-label-row">
+                <span class="video-settings-label">Длительность</span>
+                <strong id="videoDurationValue">8 секунд</strong>
+              </div>
+              <input class="video-duration-slider" id="videoDurationSlider" type="range" min="4" max="15" step="1" value="8" />
+            </div>
+
+            <div class="video-settings-section">
+              <span class="video-settings-label">Качество</span>
+              <div class="video-choice-row" id="videoQualityGroup">
+                <button class="video-choice" type="button" data-quality="480p">480p</button>
+                <button class="video-choice" type="button" data-quality="720p">720p</button>
+                <button class="video-choice is-selected" type="button" data-quality="1080p">1080p</button>
+                <button class="video-choice" type="button" data-quality="4K">4K</button>
+              </div>
+            </div>
+
+            <div class="video-settings-section">
+              <span class="video-settings-label">Формат</span>
+              <div class="video-choice-row" id="videoFormatGroup">
+                <button class="video-choice is-selected" type="button" data-format="16:9">16:9</button>
+                <button class="video-choice" type="button" data-format="9:16">9:16</button>
+                <button class="video-choice" type="button" data-format="1:1">1:1</button>
+                <button class="video-choice" type="button" data-format="2:3">2:3</button>
+                <button class="video-choice" type="button" data-format="3:2">3:2</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="music-settings-panel" id="musicSettingsPanel" aria-hidden="true"></div>
+
+          <div class="search-box">
+            <input id="fileInput" type="file" multiple />
+            <label class="attach-button" for="fileInput" aria-label="Прикрепить медиа или файлы">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </label>
+
+            <div class="input-field">
+              <textarea id="query" name="query" rows="1" autocomplete="off"></textarea>
+              <span class="animated-placeholder" id="animatedPlaceholder">Что у тебя на уме?</span>
+            </div>
+
+            <div class="format-select" id="formatSelect">
+              <button class="format-button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span class="format-icon" id="selectedFormatIcon" aria-hidden="true"></span>
+                <span id="selectedFormat">16:9</span>
+              </button>
+              <div class="format-menu" role="listbox" aria-label="Выбор формата">
+                <button class="format-option is-selected" type="button" role="option" aria-selected="true" data-format="16:9">
+                  <span class="format-icon format-16-9" aria-hidden="true"></span>
+                  <strong>16:9</strong>
+                  <span>Широкоэкранный</span>
+                </button>
+                <button class="format-option" type="button" role="option" aria-selected="false" data-format="9:16">
+                  <span class="format-icon format-9-16" aria-hidden="true"></span>
+                  <strong>9:16</strong>
+                  <span>Вертикальный</span>
+                </button>
+                <button class="format-option" type="button" role="option" aria-selected="false" data-format="1:1">
+                  <span class="format-icon format-1-1" aria-hidden="true"></span>
+                  <strong>1:1</strong>
+                  <span>Квадрат</span>
+                </button>
+                <button class="format-option" type="button" role="option" aria-selected="false" data-format="2:3">
+                  <span class="format-icon format-2-3" aria-hidden="true"></span>
+                  <strong>2:3</strong>
+                  <span>Высокий</span>
+                </button>
+                <button class="format-option" type="button" role="option" aria-selected="false" data-format="3:2">
+                  <span class="format-icon format-3-2" aria-hidden="true"></span>
+                  <strong>3:2</strong>
+                  <span>Широко</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="model-select" id="modelSelect">
+              <button class="model-button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span id="selectedModel">Chat GPT</span>
+              </button>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m7 10 5 5 5-5" />
+              </svg>
+              <div class="model-menu" role="listbox" aria-label="Выбор модели">
+                <button class="model-option is-selected" type="button" role="option" aria-selected="true" data-model="Chat GPT">Chat GPT</button>
+                <button class="model-option" type="button" role="option" aria-selected="false" data-model="Gemini">Gemini</button>
+                <button class="model-option" type="button" role="option" aria-selected="false" data-model="DeepSeek">DeepSeek</button>
+                <button class="model-option" type="button" role="option" aria-selected="false" data-model="Perplexity">Perplexity</button>
+              </div>
+            </div>
+
+            <button class="video-settings-toggle" id="videoSettingsToggle" type="button" aria-label="Настройки видео" aria-expanded="false" aria-controls="videoSettingsPanel">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 15.4a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8Z"></path>
+                <path d="M19.4 15a1.8 1.8 0 0 0 .36 1.98l.06.06a2.1 2.1 0 0 1-2.97 2.97l-.06-.06a1.8 1.8 0 0 0-1.98-.36 1.8 1.8 0 0 0-1.09 1.65V21a2.1 2.1 0 0 1-4.2 0v-.09a1.8 1.8 0 0 0-1.09-1.65 1.8 1.8 0 0 0-1.98.36l-.06.06a2.1 2.1 0 0 1-2.97-2.97l.06-.06A1.8 1.8 0 0 0 4.6 15a1.8 1.8 0 0 0-1.65-1.09H3a2.1 2.1 0 0 1 0-4.2h.09A1.8 1.8 0 0 0 4.74 8.6a1.8 1.8 0 0 0-.36-1.98l-.06-.06a2.1 2.1 0 0 1 2.97-2.97l.06.06a1.8 1.8 0 0 0 1.98.36A1.8 1.8 0 0 0 10.42 2.36V2a2.1 2.1 0 0 1 4.2 0v.09a1.8 1.8 0 0 0 1.09 1.65 1.8 1.8 0 0 0 1.98-.36l.06-.06a2.1 2.1 0 0 1 2.97 2.97l-.06.06a1.8 1.8 0 0 0-.36 1.98 1.8 1.8 0 0 0 1.65 1.09H22a2.1 2.1 0 0 1 0 4.2h-.09A1.8 1.8 0 0 0 19.4 15Z"></path>
+              </svg>
+            </button>
+
+            <button class="send-button" type="submit" aria-label="Отправить запрос">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 12h11M13 7l5 5-5 5" />
+              </svg>
+            </button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <script src="env.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
