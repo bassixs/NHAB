@@ -24,17 +24,11 @@ const selectedFormatIcon = document.querySelector("#selectedFormatIcon");
 const formatOptions = document.querySelectorAll(".format-option");
 const videoSettingsPanel = document.querySelector("#videoSettingsPanel");
 const videoSettingsToggle = document.querySelector("#videoSettingsToggle");
-const videoSettingsSummary = document.querySelector("#videoSettingsSummary");
 const videoSettingsChip = document.querySelector("#videoSettingsChip");
 const videoSettingsChipText = document.querySelector("#videoSettingsChipText");
 const musicSettingsPanel = document.querySelector("#musicSettingsPanel");
 const musicSettingsChip = document.querySelector("#musicSettingsChip");
 const musicSettingsChipText = document.querySelector("#musicSettingsChipText");
-const videoModelGrid = document.querySelector("#videoModelGrid");
-const videoDurationSlider = document.querySelector("#videoDurationSlider");
-const videoDurationValue = document.querySelector("#videoDurationValue");
-const videoQualityGroup = document.querySelector("#videoQualityGroup");
-const videoFormatGroup = document.querySelector("#videoFormatGroup");
 const topNav = document.querySelector(".top-nav");
 const topTabs = document.querySelectorAll(".top-tab");
 const chatsPopover = document.querySelector("#chatsPopover");
@@ -727,10 +721,6 @@ const resetVideoSettings = () => {
     quality: config.defaultQuality,
     format: config.defaultFormat,
   });
-};
-
-const renderVideoModelOptions = () => {
-  renderVideoSettingsPanel();
 };
 
 const getMusicSettings = () => ({
@@ -2038,47 +2028,6 @@ musicSettingsPanel.addEventListener("input", (event) => {
   }
 });
 
-videoModelGrid.addEventListener("click", (event) => {
-  const option = event.target.closest(".video-model-option");
-
-  if (!option) {
-    return;
-  }
-
-  setVideoSettings({ model: option.dataset.model });
-  updateActiveChat();
-});
-
-videoDurationSlider.addEventListener("input", () => {
-  setVideoSettings({ duration: videoDurationSlider.value });
-});
-
-videoDurationSlider.addEventListener("change", () => {
-  updateActiveChat();
-});
-
-videoQualityGroup.addEventListener("click", (event) => {
-  const option = event.target.closest(".video-choice");
-
-  if (!option) {
-    return;
-  }
-
-  setVideoSettings({ quality: option.dataset.quality });
-  updateActiveChat();
-});
-
-videoFormatGroup.addEventListener("click", (event) => {
-  const option = event.target.closest(".video-choice");
-
-  if (!option) {
-    return;
-  }
-
-  setVideoSettings({ format: option.dataset.format });
-  updateActiveChat();
-});
-
 formatButton.addEventListener("click", () => {
   if (formatSelect.classList.contains("is-open")) {
     closeFormatMenu();
@@ -2261,7 +2210,7 @@ topTabs.forEach((tab) => {
 
 window.addEventListener("resize", syncTopIndicator);
 
-renderVideoModelOptions();
+renderVideoSettingsPanel();
 syncActiveTopTab();
 renderModelOptions();
 document.body.dataset.page = activePage;

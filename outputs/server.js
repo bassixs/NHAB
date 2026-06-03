@@ -75,7 +75,7 @@ const handleChat = async (request, response) => {
 
   if (!apiModel) {
     sendJson(response, 400, {
-      error: `${selectedModel} пока не подключена. Сейчас API-ответы настроены для Chat GPT.`,
+      error: `${selectedModel} пока не подключен. Сейчас API-ответы настроены для Chat GPT.`,
     });
     return;
   }
@@ -150,7 +150,7 @@ const server = http.createServer(async (request, response) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Syntx Field is running at http://localhost:${PORT}`);
+  console.log(`NeuroHAB is running at http://localhost:${PORT}`);
   if (shouldUseMock) {
     console.log("LOCAL_MOCK mode is active. Set OPENAI_API_KEY to use OpenAI API.");
   }
